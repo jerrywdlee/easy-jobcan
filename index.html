@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Easy Jobcan</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+
+    <!--my theme-->
+    <link rel="stylesheet" href="css/themes/temona_01.css" />
+    <link rel="stylesheet" href="css/quiz.css"/>
+
+  </head>
+  <body>
+    <!--  =====▽▽この下にページごとの処理を記述します▽▽===== -->
+    <!--  ============================ページ区切り[スタート]============================ -->
+    <div data-role="page" id="topPage" >
+      <div data-role="header">
+        <h1 style="font-size:1.5em;padding: 5px;">Easy Jobcan</h1>
+        <a href="#setInfoPage" class="requestfullscreen ui-btn-right" data-icon="info" data-rel="dialog" id="setting">設定</a>
+        <div data-role="navbar" data-iconpos="left">
+          <ul>
+            <li><a href="" class="ui-btn att-status" data-rel="dialog" id="work_status" >未出勤</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <!--
+      <div style="text-align:center;">
+        <h1 class="title" style="font-size:3em;padding: 5px;">クイズ☆オフ☆ルーキー</h1>
+        <img src="img/vietnam.png" style="width: 350px">
+      </div>
+      -->
+      <div data-role="content">
+        <button id="set_attendance" class="attendance at-btn ui-btn"><span>出 退 勤</span></button>
+        <ul data-role="listview" data-inset="true" id="questionList"　 data-type="horizontal">
+        <!-- data-inset="true" は左右空白を残す -->
+        <!--
+          <li><a href="#preparePage" class="attendance at-btn">打　刻</a></li>
+        -->
+          <!--
+          <li><button onclick='play_bgm()'>play</button>
+          <li><button onclick='stop_bgm()'>stop_bgm</button>
+          <li><button onclick="judge_beep('time_up')">beep</button></li>
+        -->
+        </ul>
+        <hr class="split-bar"/>
+        <div class="ui-grid-a">
+          <div class="ui-block-a" id="over_work_hour_wrap">
+            <select class="" name="" id="over_work_hour">
+              <option value="13">18時</option>
+              <option value="14">19時</option>
+              <option value="15">20時</option>
+              <option value="16">21時</option>
+              <option value="17">22時</option>
+              <option value="18">23時</option>
+              <option value="19">翌0時</option>
+              <option value="20">翌1時</option>
+              <option value="21">翌2時</option>
+              <option value="22">翌3時</option>
+              <option value="23">翌4時</option>
+              <option value="24">翌5時</option>
+              <option value="25">翌6時</option>
+              <option value="26">翌7時</option>
+              <option value="27">翌8時</option>
+              <option value="28">翌9時</option>
+            </select>
+          </div>
+          <div class="ui-block-b" id="over_work_min_wrap">
+            <select class="" name="" id="over_work_min">
+              <option value="0">00分</option>
+              <option value="10">10分</option>
+              <option value="20">20分</option>
+              <option value="30">30分</option>
+              <option value="40">40分</option>
+              <option value="50">50分</option>
+            </select>
+          </div>
+        </div>
+        <button id="set_over_work" class="over-work at-btn ui-btn"><span>残業申請</span></button>
+      </div>
+      <div data-role="footer" data-position="fixed">
+        <h1 >© Jerry Lee 2008-2017</h1>
+      </div>
+    </div>
+    <!--  ============================ページ区切り[正解率]============================ -->
+    <div data-role="page" id="setInfoPage">
+      <div data-role="header">
+        <h1>== ログイン情報 ==</h1>
+      </div>
+      <div data-role="content">
+        <table class="input-info">
+          <tr>
+            <td style="width: 6em;" >会社ID:</td>
+            <td><input id="company_id" type="text" required></td>
+          </tr>
+          <tr>
+            <td>E-Mail:</td>
+            <td><input id="email" type="text"></td>
+          </tr>
+          <tr>
+            <td>Password:</td>
+            <td><input id="password" type="password"></td>
+          </tr>
+          <tr>
+            <td>サーバー:</td>
+            <td><input id="server_url" type="text"></td>
+          </tr>
+        </table>
+        <a data-role="button" id="save_info" href="#">保存</a>
+        <a data-role="button" id="return_top" href="#topPage" disabled>閉じる</a>
+      </div>
+    </div>
+  <!--  ===================================================================================== -->
+  <script src="js/app.js"></script>
+  </body>
+</html>

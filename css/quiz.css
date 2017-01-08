@@ -1,0 +1,30 @@
+.areaSize{
+  font-size: 0.7em;
+  color: maroon;
+  text-align: right;
+}
+.title, .quiz_text, td, a, .name, .attendance, .over-work{
+  /*font-size: 3em;*/
+  color: rgb(111, 82, 8) !important;
+}
+.attendance, .over-work{
+  font-size: 2.5em;
+  text-align: center;
+  border-radius: 1em;
+}
+.att-status{
+  font-size: 1.5em !important;
+	padding-top: 5px;
+	padding-bottom: 3px;
+}
+.over-work{
+	font-size: 2em;
+	border-radius: 0.5em;
+}
+hr.split-bar{
+	margin-top: 50px;
+	margin-bottom: 40px;
+}
+.input-info{
+	width: 98%;
+}
