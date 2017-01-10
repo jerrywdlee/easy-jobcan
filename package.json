@@ -1,0 +1,27 @@
+{
+  "name": "easy-jobcan",
+  "version": "0.0.4",
+  "description": "Easy Jobcan check-in",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerrywdlee/easy-jobcan.git"
+  },
+  "keywords": [
+    "jobcan"
+  ],
+  "author": "Jerry Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jerrywdlee/easy-jobcan/issues"
+  },
+  "homepage": "https://github.com/jerrywdlee/easy-jobcan#readme"
+}
