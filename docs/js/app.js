@@ -1,5 +1,10 @@
 
 /*  */
+var company_id = ''
+, email = ''
+, password = ''
+, server_url = ''
+
 $(document).on("pageinit", "#topPage", function(){
   /* データがない場合の対応 */
   $('#work_status').hide()
@@ -9,6 +14,7 @@ $(document).on("pageinit", "#topPage", function(){
       $('#setting').click()
     }, 100);
   } else {
+    resetInfos()
     updateAttrStatus()
   }
   /* 残業申請時間をセット */
@@ -26,13 +32,21 @@ $(document).on("pageinit", "#setInfoPage", function(){
   $('#email').val(localStorage['email'])
   $('#password').val(localStorage['password'])
   $('#server_url').val(localStorage['server_url'])
+  resetInfos()
 })
 
 /* 主逻辑 */
 $(document).ready(function(){
   /* 打刻 */
   $('#set_attendance').on('click', function () {
-    alert(this)
+    // alert(this)
+    $.get(server_url+'attend',
+    { company_id: company_id, email: email, password: password },
+    function (data) {
+      console.log(data)
+      var response = JSON.parse(data)
+      $('#work_status').html(response.text+' ('+response.time.split(' ')[1]+')')
+    })
   })
   /* 残業申請 */
   $('#set_over_work').on('click', function () {
@@ -48,6 +62,7 @@ $(document).ready(function(){
       localStorage.setItem('server_url',$('#server_url').val())
       alert('保存しました！')
       $('button.at-btn').prop("disabled", false)
+      updateAttrStatus()
     } else {
       alert('データ不完全！')
     }
@@ -56,4 +71,11 @@ $(document).ready(function(){
 
 function updateAttrStatus() {
   $('#work_status').html('勤怠ステータス取得中...').show()
+}
+
+function resetInfos() {
+  company_id = localStorage['company_id']
+  email = localStorage['email']
+  password = localStorage['email']
+  server_url = localStorage['server_url']
 }

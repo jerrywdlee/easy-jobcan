@@ -2,6 +2,7 @@ config.json
 config.xml
 admin_config.json
 log
+out
 
 # Logs
 logs
