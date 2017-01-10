@@ -2,9 +2,9 @@
 /*  */
 $(document).on("pageinit", "#topPage", function(){
   /* データがない場合の対応 */
+  $('#work_status').hide()
   if (!(localStorage['company_id']&&localStorage['email']&&localStorage['password']&&localStorage['server_url'])) {
     $('button.at-btn').prop("disabled", true)
-    $('#work_status').hide()
     setTimeout(function () {
       $('#setting').click()
     }, 100);
