@@ -38,14 +38,21 @@ $(document).on("pageinit", "#setInfoPage", function(){
 /* 主逻辑 */
 $(document).ready(function(){
   /* 打刻 */
+  resetInfos()
   $('#set_attendance').on('click', function () {
     // alert(this)
-    $.get(server_url+'attend',
-    { company_id: company_id, email: email, password: password },
-    function (data) {
+    // http://localhost:3051/attend?company_id=&email=&password=
+    console.log(server_url,company_id,email,password);
+    $('#set_attendance span').html('打刻中')
+    $('#set_attendance').prop("disabled", true)
+    $.get(server_url+'/attend',
+    { company_id: company_id, email: email, password: password })
+    .done(function (data) {
       console.log(data)
       var response = JSON.parse(data)
       $('#work_status').html(response.text+' ('+response.time.split(' ')[1]+')')
+      $('#set_attendance span').html('出 退 勤')
+      $('#set_attendance').prop("disabled", false)
     })
   })
   /* 残業申請 */
@@ -76,6 +83,6 @@ function updateAttrStatus() {
 function resetInfos() {
   company_id = localStorage['company_id']
   email = localStorage['email']
-  password = localStorage['email']
+  password = localStorage['password']
   server_url = localStorage['server_url']
 }
