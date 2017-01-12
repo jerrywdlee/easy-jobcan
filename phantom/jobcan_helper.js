@@ -61,7 +61,10 @@ exports.after_attend = function (casper, config) {
 
 exports.working_status = function (casper, config) {
   casper.then(function () {
-    getWorkStatus(this)
+    this.wait(500, function() {
+      getWorkStatus(this)
+    });
+    // getWorkStatus(this)
   })
 }
 
