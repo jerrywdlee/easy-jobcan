@@ -8,6 +8,7 @@ out
 *.crt
 *.csr
 *.key
+*.pem
 
 # Logs
 logs
