@@ -30,3 +30,5 @@ openssl req -new -key server.key -sha256 -out server.csr
 # 証明書（公開鍵）の作成 (server.crt)
 openssl x509 -in server.csr -days 365 -req -signkey server.key -sha256 -out server.crt
 ```
+
+## Plz change domain.json before use

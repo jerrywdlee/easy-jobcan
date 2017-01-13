@@ -40,9 +40,7 @@ $(document).on("pageinit", "#setOverWorkPage", function(){
   } else {
     $('#reason_text').val($('#reason_select').val())
   }
-  setTimeout(function () {
-    $('textarea').css({'height':'auto'})
-  }, 800);
+  resizeTextarea()
   // resetInfos()
 })
 
@@ -83,10 +81,11 @@ $(document).ready(function(){
   $('#work_status').on('click', function () {
     updateAttrStatus()
   })
-  /* 残量理由のセット */
+  /* 残業理由のセット */
   $('#reason_select').on('change', function () {
     var tmp_reason_text = $('#reason_text').val() + '\n' + $('#reason_select').val()
     $('#reason_text').val(tmp_reason_text)
+    resizeTextarea()
   })
   /* 残業申請 */
   $('#set_over_work').on('click', function () {
@@ -99,8 +98,8 @@ $(document).ready(function(){
       $('#set_over_work').prop("disabled", true)
       $.get(server_url+'/api/over_work',
       { company_id: company_id, email: email, password: password,
-        over_work_hour: $('#over_work_hour').val(),
-        over_work_min: $('#over_work_min').val(),
+        over_work_hour: '_'+(parseInt($('#over_work_hour').val())+5),
+        over_work_min: '_'+$('#over_work_min').val(),
         reason: $('#reason_text').val()
       })
       .done(function (data) {
@@ -172,4 +171,9 @@ function setWorkStatus(response) {
   }
   // $('#set_attendance span').html('出 退 勤')
   $('#set_attendance span').html(button_text)
+}
+function resizeTextarea() {
+  setTimeout(function () {
+    $('textarea').css({'height':'auto'})
+  }, 800);
 }

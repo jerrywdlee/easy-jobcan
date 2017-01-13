@@ -78,8 +78,15 @@ casper.then(function () {
 */
 switch (func) {
   case 'over_work':
+    require("utils").dump(casper.cli.options);
     var reason = casper.cli.options['reason'] || '仕事が長引いたため'
     console.log(reason)
+    var over_work_condition = {
+      end_h : casper.cli.options['end_h'] || '20',
+      end_m : casper.cli.options['end_m'] || '30',
+      reason : reason
+    }
+    jobcan_helper.over_work(casper, configs, over_work_condition)
     break;
   case 'attend':
     jobcan_helper.attend(casper, configs)

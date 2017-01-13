@@ -68,6 +68,38 @@ exports.working_status = function (casper, config) {
   })
 }
 
+exports.over_work = function (casper, config, condition) {
+  var openOverWorkPage = function () {
+    window.open("https://ssl.jobcan.jp/employee/over-work/new","_self")
+  }
+  casper.then(function () {
+    this.wait(500, function() {
+      this.evaluate(openOverWorkPage)
+    });
+  })
+  casper.then(function () {
+    this.wait(500, function() {
+      this.sendKeys('select#end_h', condition.end_h.replace('_',''), {reset: true});
+      this.sendKeys('select#end_m', condition.end_m.replace('_',''), {reset: true});
+      this.sendKeys('textarea[name="description"]', condition.reason.replace(/_br_/g, '\n'), {reset: true});
+      console.log(condition.end_h.replace('_',''),condition.end_m.replace('_',''));
+      // this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_condition.png");
+    });
+  })
+  casper.then(function () {
+    this.click('input.btn.btn-info')
+    this.wait(500,function () {
+      this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_confirm.png");
+    })
+  })
+  casper.then(function () {
+    this.click('input.btn.btn-warning')
+    this.wait(500,function () {
+      this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_success.png");
+    })
+  })
+}
+
 var datestamp = function () {
   var date = new Date();
   //console.log(date.toLocaleString());
