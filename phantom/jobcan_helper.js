@@ -82,7 +82,7 @@ exports.over_work = function (casper, config, condition) {
       this.sendKeys('select#end_h', condition.end_h.replace('_',''), {reset: true});
       this.sendKeys('select#end_m', condition.end_m.replace('_',''), {reset: true});
       this.sendKeys('textarea[name="description"]', condition.reason.replace(/_br_/g, '\n'), {reset: true});
-      console.log(condition.end_h.replace('_',''),condition.end_m.replace('_',''));
+      // console.log(condition.end_h.replace('_',''),condition.end_m.replace('_',''));
       // this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_condition.png");
     });
   })
@@ -93,10 +93,14 @@ exports.over_work = function (casper, config, condition) {
     })
   })
   casper.then(function () {
-    this.click('input.btn.btn-warning')
-    this.wait(500,function () {
-      this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_success.png");
-    })
+    if (this.getCurrentUrl().indexOf('error') === -1) {
+      this.click('input.btn.btn-warning')
+      this.wait(500,function () {
+        this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_success.png");
+      })
+    } else {
+      console.log('already_applicated');
+    }
   })
 }
 

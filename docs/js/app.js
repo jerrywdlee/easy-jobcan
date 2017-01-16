@@ -95,7 +95,8 @@ $(document).ready(function(){
     localStorage.setItem('reason_text',$('#reason_text').val())
     // alert(this)
     if (confirm($('td.over_work_daytime').text()+'で残業申請しますか？')) {
-      $('#set_over_work').prop("disabled", true)
+      $('#set_over_work').css({'pointer-events':'none'})
+      // $('#set_over_work').prop("disabled", true)  // モーダルのボタンはdisabledできない...
       $.get(server_url+'/api/over_work',
       { company_id: company_id, email: email, password: password,
         over_work_hour: '_'+(parseInt($('#over_work_hour').val())+5),
@@ -103,12 +104,19 @@ $(document).ready(function(){
         reason: $('#reason_text').val()
       })
       .done(function (data) {
-        alert('残業申請しました！')
-        $('#set_over_work').prop("disabled", false)
+        console.log(data);
+        if (data.toString().indexOf('already_applicated') === -1) {
+          alert('残業申請しました！')
+        } else {
+          alert('すでに申請しました! ')
+        }
+        // $('#set_over_work').prop("disabled", false)
+        $('#set_over_work').css({'pointer-events':'auto'})
       })
       .fail(function() {
         alert('残業申請できませんでした！')
-        $('#set_over_work').prop("disabled", false)
+        // $('#set_over_work').prop("disabled", false)
+        $('#set_over_work').css({'pointer-events':'auto'})
       })
     }
   })
@@ -126,6 +134,16 @@ $(document).ready(function(){
       updateAttrStatus()
     } else {
       alert('データ不完全！')
+    }
+  })
+
+  /* jobcanページへ移動 */
+  $('#visit_jobcan').on('click', function () {
+    // alert('')
+    if ((localStorage['company_id']&&localStorage['email']&&localStorage['password']&&localStorage['server_url'])) {
+      window.open('https://ssl.jobcan.jp/login/pc-employee/?client_id='+localStorage['company_id'])
+    } else {
+      window.open('https://ssl.jobcan.jp/login/pc-employee/')
     }
   })
 })
