@@ -19,28 +19,30 @@ $(document).on("pageinit", "#topPage", function(){
     updateAttrStatus()
   }
   /* 残業申請時間をセット */
-  if (!(localStorage['over_work_hour']&&localStorage['over_work_min'])) {
+  if (!(localStorage['over_work_hour'])) {
     $('#over_work_hour').val(15).selectmenu('refresh'); // 20時
-    $('#over_work_min').val(30).selectmenu('refresh'); // 30分
   } else {
     $('#over_work_hour').val(localStorage['over_work_hour']).selectmenu('refresh')
+  }
+  if (!(localStorage['over_work_min'])) {
+    $('#over_work_min').val(30).selectmenu('refresh'); // 30分
+  } else {
     $('#over_work_min').val(localStorage['over_work_min']).selectmenu('refresh')
   }
 })
 
 $(document).on("pageinit", "#setOverWorkPage", function(){
-  $('span.over_work_day').html((new Date()).toLocaleDateString())
-  $('span.over_work_time').html((parseInt($('#over_work_hour').val())+5)+':'+$('#over_work_min').val())
+  resetDatetimeShown()
   if (localStorage['reason_select']) {
     $('#reason_select').val(localStorage['reason_select']).selectmenu('refresh')
-    $('#reason_text').val($('#reason_select').val())
+    $('#reason_text').val($('#reason_select').val()).textinput( "refresh" )
   }
   if (localStorage['reason_text']) {
-    $('#reason_text').val(localStorage['reason_text'])
+    $('#reason_text').val(localStorage['reason_text']).textinput( "refresh" )
   } else {
-    $('#reason_text').val($('#reason_select').val())
+    $('#reason_text').val($('#reason_select').val()).textinput( "refresh" )
   }
-  resizeTextarea()
+  // resizeTextarea()
   // resetInfos()
 })
 
@@ -84,18 +86,29 @@ $(document).ready(function(){
   /* 残業理由のセット */
   $('#reason_select').on('change', function () {
     var tmp_reason_text = $('#reason_text').val() + '\n' + $('#reason_select').val()
-    $('#reason_text').val(tmp_reason_text)
-    resizeTextarea()
+    $('#reason_text').val(tmp_reason_text).textinput( "refresh" )
+    // resizeTextarea()
+  })
+  $('#over_work_hour').on('change', function () {
+    localStorage.setItem('over_work_hour',$('#over_work_hour').val())
+    resetDatetimeShown()
+  })
+  $('#over_work_min').on('change', function () {
+    localStorage.setItem('over_work_min',$('#over_work_min').val())
+    resetDatetimeShown()
   })
   /* 残業申請 */
   $('#set_over_work').on('click', function () {
-    localStorage.setItem('over_work_hour',$('#over_work_hour').val())
-    localStorage.setItem('over_work_min',$('#over_work_min').val())
+    // localStorage.setItem('over_work_hour',$('#over_work_hour').val())
+    // localStorage.setItem('over_work_min',$('#over_work_min').val())
+
     localStorage.setItem('reason_select',$('#reason_select').val())
     localStorage.setItem('reason_text',$('#reason_text').val())
     // alert(this)
     if (confirm($('td.over_work_daytime').text()+'で残業申請しますか？')) {
-      $('#set_over_work').css({'pointer-events':'none'})
+      // $('#set_over_work').css({'pointer-events':'none'})
+      myBtnToggleDisabled($('#set_over_work'))
+      $('#set_over_work').html('申請中...')
       // $('#set_over_work').prop("disabled", true)  // モーダルのボタンはdisabledできない...
       $.get(server_url+'/api/over_work',
       { company_id: company_id, email: email, password: password,
@@ -111,12 +124,16 @@ $(document).ready(function(){
           alert('すでに申請しました! ')
         }
         // $('#set_over_work').prop("disabled", false)
-        $('#set_over_work').css({'pointer-events':'auto'})
+        // $('#set_over_work').css({'pointer-events':'auto'})
+        myBtnToggleDisabled($('#set_over_work'))
+        $('#set_over_work').html('残業申請')
       })
       .fail(function() {
         alert('残業申請できませんでした！')
         // $('#set_over_work').prop("disabled", false)
-        $('#set_over_work').css({'pointer-events':'auto'})
+        // $('#set_over_work').css({'pointer-events':'auto'})
+        myBtnToggleDisabled($('#set_over_work'))
+        $('#set_over_work').html('残業申請')
       })
     }
   })
@@ -177,7 +194,7 @@ function setWorkStatus(response) {
   }
   work_status = response.text || ''
   var button_text = '打 刻'
-  switch (response.text) {
+  switch (work_status.trim()) {
     case '勤務中':
       button_text = '退 勤'
       break;
@@ -192,6 +209,14 @@ function setWorkStatus(response) {
 }
 function resizeTextarea() {
   setTimeout(function () {
-    $('textarea').css({'height':'auto'})
-  }, 800);
+    // $('textarea').css({'height':'auto'})
+    $('textarea').trigger()
+  }, 100);
+}
+function resetDatetimeShown() {
+  $('span.over_work_day').html((new Date()).toLocaleDateString())
+  $('span.over_work_time').html((parseInt($('#over_work_hour').val())+5)+':'+$('#over_work_min').val())
+}
+function myBtnToggleDisabled(dom) {
+  dom.toggleClass('my-btn-disabled')
 }
