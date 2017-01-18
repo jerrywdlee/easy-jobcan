@@ -20,7 +20,7 @@ exports.attend = function (casper, config) {
   casper.then(function() {
     this.wait(1000, function() {
       //this.echo("ロード中");
-      this.capture("out/"+datestamp()+"/"+timestamp()+"_before.png");
+      this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"_before.png");
     });
   });
   casper.then(function () {
@@ -39,7 +39,7 @@ exports.attend = function (casper, config) {
       }
       getWorkStatus(this)
       // this.echo(timestamp())
-      this.capture("out/"+datestamp()+"/"+timestamp()+"_after.png");
+      this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"_after.png");
     });
   });
 }
@@ -53,7 +53,7 @@ exports.after_attend = function (casper, config) {
       }
       // getWorkStatus(this)
       // this.echo(timestamp())
-      this.capture("out/"+datestamp()+"/"+timestamp()+"_after.png");
+      this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"_after.png");
     });
   });
   */
@@ -83,20 +83,20 @@ exports.over_work = function (casper, config, condition) {
       this.sendKeys('select#end_m', condition.end_m.replace('_',''), {reset: true});
       this.sendKeys('textarea[name="description"]', condition.reason.replace(/_br_/g, '\n'), {reset: true});
       // console.log(condition.end_h.replace('_',''),condition.end_m.replace('_',''));
-      // this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_condition.png");
+      // this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"over_work_condition.png");
     });
   })
   casper.then(function () {
     this.click('input.btn.btn-info')
     this.wait(500,function () {
-      this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_confirm.png");
+      this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"over_work_confirm.png");
     })
   })
   casper.then(function () {
     if (this.getCurrentUrl().indexOf('error') === -1) {
       this.click('input.btn.btn-warning')
       this.wait(500,function () {
-        this.capture("out/"+datestamp()+"/"+timestamp()+"over_work_success.png");
+        this.capture("out/"+datestamp()+"/"+config.email.split('@')[0]+"/"+timestamp()+"over_work_success.png");
       })
     } else {
       console.log('already_applicated');
