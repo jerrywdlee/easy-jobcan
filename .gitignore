@@ -4,6 +4,12 @@ admin_config.json
 log
 out
 
+# ssl
+*.crt
+*.csr
+*.key
+*.pem
+
 # Logs
 logs
 *.log

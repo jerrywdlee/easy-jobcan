@@ -28,3 +28,8 @@ hr.split-bar{
 .input-info{
 	width: 98%;
 }
+.my-btn-disabled{
+  pointer-events: none;
+  background-color: #f8e5d3 !important;
+  color: #cdc0a6 !important;
+}

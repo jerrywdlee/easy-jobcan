@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
-
+    <link rel="shortcut icon" href="assets/favicon.ico" />
     <!--my theme-->
     <link rel="stylesheet" href="css/themes/temona_01.css" />
     <link rel="stylesheet" href="css/quiz.css"/>
@@ -15,7 +15,7 @@
   </head>
   <body>
     <!--  =====▽▽この下にページごとの処理を記述します▽▽===== -->
-    <!--  ============================ページ区切り[スタート]============================ -->
+    <!--  ============================ページ区切り[メイン画面]============================ -->
     <div data-role="page" id="topPage" >
       <div data-role="header">
         <h1 style="font-size:1.5em;padding: 5px;">Easy Jobcan</h1>
@@ -35,7 +35,7 @@
       -->
       <div data-role="content">
         <button id="set_attendance" class="attendance at-btn ui-btn"><span>出 退 勤</span></button>
-        <ul data-role="listview" data-inset="true" id="questionList"　 data-type="horizontal">
+        <ul data-role="listview" data-inset="true" id="questionList" data-type="horizontal">
         <!-- data-inset="true" は左右空白を残す -->
         <!--
           <li><a href="#preparePage" class="attendance at-btn">打　刻</a></li>
@@ -50,6 +50,7 @@
         <div class="ui-grid-a">
           <div class="ui-block-a" id="over_work_hour_wrap">
             <select class="" name="" id="over_work_hour">
+              <!-- ここのidはjobcanの残業申請のところのidと一致する -->
               <option value="13">18時</option>
               <option value="14">19時</option>
               <option value="15">20時</option>
@@ -79,13 +80,14 @@
             </select>
           </div>
         </div>
-        <button id="set_over_work" class="over-work at-btn ui-btn"><span>残業申請</span></button>
+        <a href="#setOverWorkPage" data-rel="dialog" class="over-work at-btn ui-btn"><span>残業申請</span></a>
       </div>
       <div data-role="footer" data-position="fixed">
-        <h1 >© Jerry Lee 2008-2017</h1>
+        <h1 id="">© Jerry Lee 2008-2017</h1>
+        <a class="ui-btn-right" id="visit_jobcan" style="font-size:0.5em;">Jobcan Page</a>
       </div>
     </div>
-    <!--  ============================ページ区切り[正解率]============================ -->
+    <!--  ============================ページ区切り[ログイン情報]============================ -->
     <div data-role="page" id="setInfoPage">
       <div data-role="header">
         <h1>== ログイン情報 ==</h1>
@@ -114,6 +116,40 @@
       </div>
     </div>
   <!--  ===================================================================================== -->
+
+  <!--  ============================ページ区切り[残業理由]============================ -->
+  <div data-role="page" id="setOverWorkPage">
+    <div data-role="header">
+      <h1>== 残業理由 ==</h1>
+    </div>
+    <div data-role="content">
+      <table class="input-info">
+        <tr>
+          <td style="width: 6em;" >残業日時:</td>
+          <td class="over_work_daytime"><span class="over_work_day"></span>&nbsp;&nbsp;<span class="over_work_time"></span></td>
+        </tr>
+        <tr>
+          <td>理由:</td>
+          <td>
+            <select id="reason_select" class="">
+              <option value="仕事完了していないため">仕事未完了</option>
+              <option value="会議のため">会議</option>
+              <option value="来客対応のため">来客</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea id="reason_text" rows="6" cols="40">
+            </textarea>
+          </td>
+        </tr>
+      </table>
+      <a data-role="button" id="set_over_work" href="#">残業申請</a>
+      <a data-role="button" href="#topPage" disabled>閉じる</a>
+    </div>
+  </div>
+<!--  ===================================================================================== -->
   <script src="js/app.js"></script>
   </body>
 </html>
